@@ -1,0 +1,98 @@
+---
+import AnimatedCard from './AnimatedCard.astro';
+---
+
+<section class="hero section" id="hero" aria-labelledby="hero-title">
+  <div class="hero-orbs" aria-hidden="true">
+    <span class="hero-orb hero-orb-a"></span>
+    <span class="hero-orb hero-orb-b"></span>
+    <span class="hero-orb hero-orb-c"></span>
+  </div>
+
+  <div class="hero-layout">
+    <div class="hero-copy">
+      <h1 id="hero-title">Jhan Pauline Tan</h1>
+
+      <p class="hero-rotator-box">
+        <span
+          class="hero-rotator"
+          data-hero-rotator
+          data-lines="Certified Bookkeeper||QuickBooks • Xero • Excel||Reliable Financial Support||Data Entry Specialist"
+          aria-live="polite"
+          >Certified Bookkeeper</span
+        >
+      </p>
+
+      <div class="cta-row">
+        <a href="#contact" class="btn btn-primary">Contact Me</a>
+        <a href="#experience" class="btn btn-secondary">View Experience</a>
+        <a href="#" class="btn btn-ghost" aria-label="Download resume (placeholder)">Download Resume</a>
+      </div>
+    </div>
+
+    <aside class="hero-media-frame" aria-label="Interactive profile card">
+      <AnimatedCard />
+    </aside>
+  </div>
+</section>
+
+<script>
+  const orbLayers = document.querySelectorAll<HTMLElement>('.hero-orbs');
+
+  orbLayers.forEach((layer) => {
+    if (layer.dataset.bound === 'true') return;
+    layer.dataset.bound = 'true';
+
+    const orbs = Array.from(layer.querySelectorAll<HTMLElement>('.hero-orb'));
+    if (!orbs.length) return;
+
+    const ranges = [
+      { x: 34, y: 28, s: 0.12 },
+      { x: 26, y: 24, s: 0.1 },
+      { x: 22, y: 20, s: 0.08 }
+    ];
+
+    const setNext = () => {
+      orbs.forEach((orb, index) => {
+        const range = ranges[index] ?? ranges[0];
+        const tx = (Math.random() * 2 - 1) * range.x;
+        const ty = (Math.random() * 2 - 1) * range.y;
+        const scale = 1 + (Math.random() * 2 - 1) * range.s;
+
+        orb.style.setProperty('--tx', `${tx.toFixed(2)}px`);
+        orb.style.setProperty('--ty', `${ty.toFixed(2)}px`);
+        orb.style.setProperty('--s', scale.toFixed(3));
+      });
+    };
+
+    setNext();
+    setInterval(setNext, 2100);
+  });
+
+  const rotators = document.querySelectorAll<HTMLElement>('[data-hero-rotator]');
+
+  rotators.forEach((rotator) => {
+    if (rotator.dataset.bound === 'true') return;
+    rotator.dataset.bound = 'true';
+
+    const lines = (rotator.dataset.lines ?? '')
+      .split('||')
+      .map((line) => line.trim())
+      .filter(Boolean);
+
+    if (!lines.length) return;
+
+    let currentIndex = 0;
+    rotator.textContent = lines[currentIndex];
+
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % lines.length;
+      rotator.classList.add('is-changing');
+
+      setTimeout(() => {
+        rotator.textContent = lines[currentIndex];
+        rotator.classList.remove('is-changing');
+      }, 140);
+    }, 2000);
+  });
+</script>

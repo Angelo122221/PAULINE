@@ -1,0 +1,71 @@
+---
+const skills = [
+  'Excel',
+  'QuickBooks',
+  'Xero',
+  'Data Entry',
+  'Bookkeeping',
+  'Financial Reporting',
+  'Account Reconciliation',
+  'Audit Support',
+  'Creativity',
+  'Critical Thinking',
+  'Leadership',
+  'Online Teaching Platforms',
+  'ESL Instruction',
+  'Assessment and Feedback Delivery'
+];
+
+const services = [
+  {
+    title: 'Bookkeeping and Financial Support',
+    body:
+      'Support daily financial transactions, invoice processing, account reconciliation, and organized financial records.'
+  },
+  {
+    title: 'Reporting and Data Management',
+    body:
+      'Prepare clear financial reports and manage data entry tasks with accuracy using QuickBooks, Xero, and Excel.'
+  },
+  {
+    title: 'Audit and Compliance Assistance',
+    body:
+      'Assist with documentation, working papers, and review processes that support transparency and accountability.'
+  },
+  {
+    title: 'ESL Teaching Support',
+    body:
+      'Deliver learner-focused English instruction with structured feedback and adaptable teaching methods.'
+  }
+];
+---
+
+<section class="section" id="services" aria-labelledby="services-title">
+  <div class="container">
+    <h2 id="services-title">What I Can Help With</h2>
+    <div class="grid grid-2">
+      {services.map((service) => (
+        <article class="card" aria-label={service.title}>
+          <h3>{service.title}</h3>
+          <p>{service.body}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="section" id="skills" aria-labelledby="skills-title">
+  <div class="container">
+    <h2 id="skills-title">Core Skills</h2>
+    <ul class="tag-list" aria-label="Core skills list">
+      {skills.map((skill) => (
+        <li class="tag">{skill}</li>
+      ))}
+    </ul>
+
+    <div class="card language-card">
+      <h3>Languages</h3>
+      <p>English, Filipino</p>
+    </div>
+  </div>
+</section>
